@@ -1,0 +1,1 @@
+export { CommentList, CommentEditor } from './wallIndex'
