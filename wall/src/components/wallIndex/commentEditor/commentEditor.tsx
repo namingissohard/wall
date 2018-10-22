@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import {wallStore} from '../../../common/Dto';
-import {get} from '../../../utils';
 interface CommentEditorProps{
     WallData?: wallStore;
 }

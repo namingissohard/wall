@@ -1,1 +1,1 @@
-export { CommentList, CommentEditor } from './wallIndex'
+export { CommentList, CommentEditor ,Table} from './wallIndex'
