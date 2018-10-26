@@ -1,4 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
+var fs = require('fs')
 const assert = require('assert');
 var url = 'mongodb://localhost:27017';
 const client = new MongoClient(url);
@@ -40,5 +41,24 @@ module.exports = {
             })
             client.close();
         });
+    },
+    returnFile: function(req, res, next){
+        console.log(233)
+        res.set("Content-type",'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        let myPath = './test1.xlsx'
+        fs.exists(myPath, function(exist){
+            console.log(1)
+            if(exist){
+                console.log(2)
+                var fileStream = fs.createReadStream(myPath)
+                fileStream.on("data",(chunk)=>res.write(chunk, "binary"))
+                fileStream.on("end", function(){
+                    res.end()
+                })
+            }else{
+                console.log(3)
+                res.json('emmmm')
+            }
+        })
     }
 }

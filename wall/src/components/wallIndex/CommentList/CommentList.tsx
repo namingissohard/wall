@@ -15,10 +15,8 @@ export class CommentList extends React.Component<CommentListProps, CommentListSt
         super(props)
     }
     componentDidMount(){
-        console.log(this.props.WallData!.commentData)
         get('http://localhost:3000').then(res => {
             this.props.WallData!.setComment(res.data)
-            console.log(this.props.WallData!.commentData)
         })
         
     }

@@ -7,7 +7,7 @@ interface WallIndexContainerProps{
     
 }
 interface WallIndexContainerState{
-    userInfoList: any[]
+    userInfoList: any[];
 }
 
 export class WallIndexContainer extends React.Component<WallIndexContainerProps, WallIndexContainerState>{
@@ -16,28 +16,28 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
         this.state = {
             userInfoList: [{
                 userType: 'sms',
-                role: 'sb',
+                role: '',
                 email: 'chico.zeng@sb.com',
                 cellPhone: '15675101991',
                 firstName: 'chico',
                 lastName: 'zeng',
-                location: 'die Sb Street 156st'
+                location: 'please Select role first'
             },{
                 userType: 'sms',
-                role: 'sb',
+                role: '',
                 email: 'chico.zeng@sb.com',
                 cellPhone: '15675101991',
                 firstName: 'chico',
                 lastName: 'zeng',
-                location: 'die Sb Street 156st'
+                location: 'please Select role first'
             },{
                 userType: 'sms',
-                role: 'sb',
+                role: '',
                 email: 'chico.zeng@sb.com',
                 cellPhone: '15675101991',
                 firstName: 'chico',
                 lastName: 'zeng',
-                location: 'die Sb Street 156st'
+                location: 'please Select role first'
             }]
         }
     }
@@ -45,20 +45,39 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
 
     }
     saveUserListConfig(value: string, type: string, index: number){
-        let tempName = `userInfoList[${index}][${type}]`
-        this.state.userInfoList[index][type] = value
+        let newUserInfoList = this.state.userInfoList.slice()
+        newUserInfoList[index][type] = value
         this.setState({
-            [tempName]: value
-        } as any, ()=>console.log(this.state.userInfoList))
+           userInfoList: newUserInfoList
+        })
+    }
+    addUser(){
+        this.setState(preState=>{
+            return {
+                userInfoList: [{
+                    userType: '',
+                    role: '',
+                    email: '',
+                    cellPhone: '',
+                    firstName: '',
+                    lastName: '',
+                    location: '',
+                    manually: true
+                },
+                ...preState.userInfoList
+                ]
+            }
+        })
     }  
     render(){
-
-        return <Provider WallData={WallData}><div>
-                <CommentList />
-                <CommentEditor />
-                <Table 
-                    saveUserListConfig={(value: string, type: string, index: number)=>this.saveUserListConfig(value, type, index)}
-                    userInfoList={this.state.userInfoList}/>
-            </div></Provider>
+        return <Provider WallData={WallData}>
+                    <div>
+                        <CommentList />
+                        <CommentEditor />
+                        <Table addUser={()=>this.addUser()}
+                            saveUserListConfig={(value: string, type: string, index: number)=>this.saveUserListConfig(value, type, index)}
+                            userInfoList={this.state.userInfoList}/>
+                    </div>
+                </Provider>
     }
 }

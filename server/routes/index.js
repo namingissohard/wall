@@ -18,5 +18,8 @@ router.get('/', function(req, res, next) {
   console.log(111)
   wall.getAllComments(req, res, next)
 });
+router.post('/returnFile',function(req, res, next){
+  wall.returnFile(req, res, next)
+})
 
 module.exports = router;
