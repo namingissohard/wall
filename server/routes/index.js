@@ -8,15 +8,19 @@ router.all('*',function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
   if (req.method == 'OPTIONS') {
-    res.send(200); /*让options请求快速返回*/
+    res.sendStatus(200); /*让options请求快速返回*/
   }
   else {
     next();
   }
 });
 router.get('/', function(req, res, next) {
-  console.log(111)
+  console.log('receive a get request to /')
   wall.getAllComments(req, res, next)
+});
+router.post('/createComment', function(req, res, next) {
+  console.log('receive a post request to /createComment')
+  wall.addComment(req, res, next)
 });
 router.post('/returnFile',function(req, res, next){
   wall.returnFile(req, res, next)

@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import {wallStore} from '../../../common/Dto';
 interface CommentEditorProps{
     WallData?: wallStore;
+    createComment: Function;
 }
 interface CommentEditorState{
     nickName: string;
@@ -23,6 +24,14 @@ export class CommentEditor extends React.Component<CommentEditorProps, CommentEd
             [type]: value
         } as Pick<CommentEditorState, keyof CommentEditorState>)
     }
+    async createComment(){
+        const commentOptions = {
+            name: this.state.nickName,
+            content: this.state.comment
+        }
+        this.props.createComment(commentOptions)
+        
+    }
     render (){
         
         return <div className="commentEditor">
@@ -41,7 +50,9 @@ export class CommentEditor extends React.Component<CommentEditorProps, CommentEd
                     onChange={(e)=>this.editorConfigSave(e.target.value, 'comment')}
                     placeholder={`在这里写下你的伟论`}/>
             </div>
-            <button className="btn btn-primary btn-block">提交</button>
+            <button 
+                className="btn btn-primary btn-block"
+                onClick={()=>this.createComment()}>提交</button>
         </div>
     }
 }

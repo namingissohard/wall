@@ -1,8 +1,6 @@
-var MongoClient = require('mongodb').MongoClient;
+var db = require('../conf/db')
 var fs = require('fs')
-const assert = require('assert');
-var url = 'mongodb://localhost:27017';
-const client = new MongoClient(url);
+var assert = require('assert');
 var jsonWrite = function(res, ret){
     if(typeof ret === 'undefined'){
         res.json({
@@ -10,46 +8,41 @@ var jsonWrite = function(res, ret){
             msg: '报错了emmmm'
         })
     }else{
-        res.json(ret)
+        res.set("Content-Type", "application/json")
+        res.send(ret)
+        console.log(res.body)
     }
 }
 module.exports = {
     getAllComments:function(req, res, next){
-        // Connect using MongoClient
-        const client = new MongoClient(url);
-        client.connect(function(err) {
-            const wall = client.db('node').collection('wall')
-            wall.find({}).toArray(function(err, docs){
-                jsonWrite(res, err||docs)
-                err? console.log(err):null
-            })
-            client.close();
-        });
+        db.findMany('wall', {}, function(err, allList){
+            if(err){
+                console.log(err)
+            }
+            else{
+                jsonWrite(res, err|| allList)
+                //console.log((allList[0].create_at) instanceof Date)
+            }
+        })
     },
-    addComments: function(req, res, next){
+    addComment: function(req, res, next){
         var params = req.body
-        client.connect(function(err) {
-            const wall = client.db('node').collection('wall')
-            wall.insertMany([{
-                name: params.name,
-                content: params.content,
-                head: 'https://imgsa.baidu.com/forum/pic/item/6059252dd42a28345099e49552b5c9ea15cebf75.jpg',
-                time: Date.now()
-            }],function(err, result){
-                assert.equal(err, null);
-                jsonWrite(res, err||result)      
-            })
-            client.close();
-        });
+        var insertOptions = {           
+            name: params.name,
+            content: params.content,
+            head: 'https://imgsa.baidu.com/forum/pic/item/6059252dd42a28345099e49552b5c9ea15cebf75.jpg',
+            create_at: new Date()            
+        }
+        db.insertOne('wall',insertOptions, function(err, result){
+            assert.equal(err, null);
+            jsonWrite(res, err||result)      
+        })
+
     },
     returnFile: function(req, res, next){
-        console.log(233)
-        res.set("Content-type",'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         let myPath = './test1.xlsx'
         fs.exists(myPath, function(exist){
-            console.log(1)
             if(exist){
-                console.log(2)
                 var fileStream = fs.createReadStream(myPath)
                 fileStream.on("data",(chunk)=>res.write(chunk, "binary"))
                 fileStream.on("end", function(){

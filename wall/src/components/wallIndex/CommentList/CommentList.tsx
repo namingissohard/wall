@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import {wallStore} from '../../../common/Dto';
+import {wallStore, commentDto} from '../../../common/Dto';
 import {get} from '../../../utils';
+import { debug } from 'util';
 interface CommentListProps{
     WallData?: wallStore;
 }
@@ -21,13 +22,13 @@ export class CommentList extends React.Component<CommentListProps, CommentListSt
         
     }
     render (){
-        const commentList = this.props.WallData!.commentData.map((comment, index)=>{
+        const commentList = this.props.WallData!.commentData.map((comment: commentDto, index)=>{
             return <div className="comment" key={`CommentList-${index}`}>
                 <div className="comment-head"><img src={comment.head} /></div>
                 <div className="right">
                     <div className="comment-name">{comment.name}</div>
                     <div className="comment-content">{comment.content}</div>
-                    <div className="comment-time">{comment.time}</div>
+                    <div className="comment-time">{Date.parse(comment.create_at!)}</div>
                 </div>
             </div>
         })

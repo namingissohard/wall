@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import {wallStore} from '../../../common/Dto';
 import {TableItem} from './TableItem';
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 interface TableProps{
     WallData?: wallStore;
     saveUserListConfig: Function;
@@ -39,17 +39,18 @@ export class Table extends React.Component<TableProps, TableState>{
         // let a = document.createElement('a')
         // a.href = url
         // a.download = 'test233.xlsx'
-        axios.post('http://localhost:3000/returnFile',{responseType: 'blob'}).then(res=>{
-            let blob = new Blob([res.data],{"type": 'application/vnd.ms-excel'})
+        axios({
+            url: 'http://localhost:3000/returnFile',
+            method: 'post',
+            responseType: 'blob'
+        }).then((res: AxiosResponse)=>{
+            let blob = new Blob([res.data])
             const url = window.URL.createObjectURL(blob)
             let a = document.createElement('a')
             a.href = url
             a.download = 'test233.xlsx'
             a.click()
-            console.log(url)
-            console.log(res)
         })
-        //a.click()
     }
     render (){
         const data = this.props.userInfoList

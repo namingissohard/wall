@@ -3,11 +3,11 @@ export interface wallStore{
     setComment: Function;
 }
 export interface commentDto{
-    _id: string;
+    _id?: string;
     name: string;
-    head: string;
+    head?: string;
     content: string;
-    time: Date;
+    create_at?: string;
 }
 export interface roleDictDto{
     storeManager: string[];

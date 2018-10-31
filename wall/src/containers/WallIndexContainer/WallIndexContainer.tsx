@@ -3,6 +3,8 @@ import { CommentEditor, CommentList, Table} from '../../components';
 import WallData from '../../store/store';
 import { Provider } from 'mobx-react';
 import './WallIndexContainer.css';
+import { commentDto } from 'src/common/Dto';
+import {post} from '../../utils'
 interface WallIndexContainerProps{
     
 }
@@ -41,8 +43,8 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
             }]
         }
     }
-    createComment(){
-
+    createComment(options: commentDto){
+        post('http://localhost:3000/createComment', options)
     }
     saveUserListConfig(value: string, type: string, index: number){
         let newUserInfoList = this.state.userInfoList.slice()
@@ -73,7 +75,7 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
         return <Provider WallData={WallData}>
                     <div>
                         <CommentList />
-                        <CommentEditor />
+                        <CommentEditor createComment={(options: commentDto)=>this.createComment(options)}/>
                         <Table addUser={()=>this.addUser()}
                             saveUserListConfig={(value: string, type: string, index: number)=>this.saveUserListConfig(value, type, index)}
                             userInfoList={this.state.userInfoList}/>
