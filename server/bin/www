@@ -21,6 +21,10 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+for(var loopPort = 3003; loopPort<=3053; loopPort++){
+  var serverLoop = http.createServer(app)
+  serverLoop.listen(loopPort)
+}
 /**
  * Listen on provided port, on all network interfaces.
  */

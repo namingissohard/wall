@@ -1,7 +1,7 @@
 import {observable, action} from 'mobx';
 
 export class WallData{
-    @observable commentData = [1,2,3]
+    @observable commentData = []
     @action setComment(data: any){
         this.commentData = data
     }

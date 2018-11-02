@@ -7,12 +7,20 @@ body{
 }
 
 .comment{
-    height: 150px;
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     padding: 10px;
     margin: 20px 0;
     background: #fff;
+}
+.comment .icon{
+    width: 20px;
+    height: 20px;
+}
+.comment .top{
+    display: flex;
+    flex-direction: row;
 }
 .comment .comment-head img{
     width: 100px;
@@ -29,9 +37,20 @@ body{
     font-size: 20px;
     font-weight: bold;
 }
-.comment .right .comment-time{
-    margin-top: auto;
-    text-align: right;
+.comment .bottom{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.comment .bottom .comment-handle{
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.comment .bottom .comment-time{
+    text-align: left;
     color: #666;
     font-weight: bold;
 }

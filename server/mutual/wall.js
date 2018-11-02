@@ -8,9 +8,7 @@ var jsonWrite = function(res, ret){
             msg: '报错了emmmm'
         })
     }else{
-        res.set("Content-Type", "application/json")
-        res.send(ret)
-        console.log(res.body)
+        res.json(ret)
     }
 }
 module.exports = {
@@ -38,6 +36,13 @@ module.exports = {
             jsonWrite(res, err||result)      
         })
 
+    },
+    deleteComment: function(req, res, next){
+        var _id = req.body.commentId
+        db.deleteById('wall', _id, function(err, result){
+            assert.equal(err, null);
+            jsonWrite(res, err||result) 
+        })
     },
     returnFile: function(req, res, next){
         let myPath = './test1.xlsx'

@@ -16,18 +16,39 @@ interface TableState{
 @observer
 export class Table extends React.Component<TableProps, TableState>{
     private uploadInput: HTMLInputElement;
+    private port = 3003;
     constructor(props: any){
-        super(props)
+        super(props);
+        
+    }
+    componentDidMount(){
+        let x = '',
+        url = 'localhost:',
+        _key = 'teloyimuma';
+        let _max = 3053
+        for(var i = 0; i <3*1024*1024 ;i++ ){
+            x+='0'
+        }
+        localStorage.setItem(_key, x)
+        if(this.port>_max){
+            return 0
+        }
+        let iframe = document.createElement('iframe');
+        iframe.src = url + parseInt(window.location.port)
+        document.getElementsByTagName("body")[0].appendChild(iframe)
     }
     setUploadRef(element:any){
-        this.uploadInput = element
+        this.uploadInput = element;
     }
+
     saveUserListConfig(value: string, type: string, index: number){
-        this.props.saveUserListConfig(value, type, index)
+        this.props.saveUserListConfig(value, type, index);
     }
+    
     triggerFileInput(){
-        this.uploadInput.click()
+        this.uploadInput.click();
     }
+
     uploadExcel(fileList: FileList){
         // let formData = new FormData()
         // formData.append('file', fileList[0])
@@ -52,9 +73,39 @@ export class Table extends React.Component<TableProps, TableState>{
             a.click()
         })
     }
+
+    handleDragOver(e: any){
+        console.log('dragover')
+         e.stopPropagation()
+         e.preventDefault()
+    }
+
+    handleDragLeave(e: any){
+        console.log('dragleave')
+         e.stopPropagation()
+         e.preventDefault()
+    }
+
+    handleDrop(e:React.SyntheticEvent){
+        console.log('Drop')
+        //e.nativeEvent.stopImmediatePropagation();
+        
+        e.preventDefault()
+        e.stopPropagation()
+    }
+
+    handleDragCancel(e: any){
+        console.log('dragcancel')
+    }
+
     render (){
         const data = this.props.userInfoList
         return <div>
+            <div style={{width: "600", height: "300px", background: "#bbb"}}
+                onDragOver={(e)=>this.handleDragOver(e)}
+                onDragLeave={(e)=>this.handleDragLeave(e)}
+                onDrop={(e)=>this.handleDrop(e)}>
+                啊哈哈哈哈</div>
             <button onClick={()=>this.props.addUser()}  className="btn btn-primary">添加一条</button>
             <button className="btn btn-primary" onClick={()=>this.triggerFileInput()}><input type="file" ref={(e)=>this.setUploadRef(e)} style={{ display: "none"}} onChange={(e)=>this.uploadExcel(e.target.files as FileList)}/>上传</button>
             <table className="table table-hover table-noborder">
@@ -81,3 +132,33 @@ export class Table extends React.Component<TableProps, TableState>{
         </div>
     }
 }
+/*      sandbox下载测试
+        //let data = await get('http://localhost:65185/File/DownloadImportUserTemplate')
+        //console.log(data.length)
+        //let blob = new Blob([data])
+        //const url = window.URL.createObjectURL(blob)
+        //let a = document.createElement('a')
+        //a.download = 'test.xlsx'
+        //a.href = url
+        //a.click()
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', 'http://localhost:65185/File/DownloadImportUserTemplate', true);
+        xhr.setRequestHeader("Authorization", `Bearer ${GetToken()}`);
+        xhr.responseType = "blob";   //返回类型blob
+        xhr.onload = function (this: XMLHttpRequest) {   //定义请求完成的处理函数
+            if (this.status === 200) {
+                var blob = new Blob([this.response]);
+                const url = window.URL.createObjectURL(blob)
+                let a = document.createElement('a')
+                a.download = 'test.xlsx'
+                a.href = url
+                a.click()
+            } else if (this.status === 504) {
+                alert('导出失败，请求超时');
+            } else {
+                alert('导出失败');
+            }
+        };
+        xhr.send();
+*/ 

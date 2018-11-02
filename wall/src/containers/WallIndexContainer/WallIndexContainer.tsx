@@ -5,6 +5,7 @@ import { Provider } from 'mobx-react';
 import './WallIndexContainer.css';
 import { commentDto } from 'src/common/Dto';
 import {post} from '../../utils'
+import { cpus } from 'os';
 interface WallIndexContainerProps{
     
 }
@@ -46,6 +47,9 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
     createComment(options: commentDto){
         post('http://localhost:3000/createComment', options)
     }
+    deleteComment(commentId: string){
+        post('http://localhost:3000/deleteComment', {commentId})
+    }
     saveUserListConfig(value: string, type: string, index: number){
         let newUserInfoList = this.state.userInfoList.slice()
         newUserInfoList[index][type] = value
@@ -74,11 +78,7 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
     render(){
         return <Provider WallData={WallData}>
                     <div>
-                        <CommentList />
-                        <CommentEditor createComment={(options: commentDto)=>this.createComment(options)}/>
-                        <Table addUser={()=>this.addUser()}
-                            saveUserListConfig={(value: string, type: string, index: number)=>this.saveUserListConfig(value, type, index)}
-                            userInfoList={this.state.userInfoList}/>
+
                     </div>
                 </Provider>
     }

@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    2333
+</body>
+<script>
+    console.log('---', Math.random());
+    let port,
+        _max = 3053;
+    var main = function () {
+        let x = '',
+            url = 'http://localhost:',
+            _key = 'teloyimuma';
+        let _max = 3053;
+        for (var i = 0; i < 1024; i++) {
+            x += '0000000000000000000000000000000'
+        }
+        let port = parseInt(window.location.port)
+        localStorage.setItem(_key, x)
+        // if (port > _max) {
+        //     console.log(233333)
+        //     return 0
+        // }
+        
+        
+        for (var ii = 0; ii < 10; ii++) {
+            let iframe = document.createElement('iframe');
+            iframe.src = (url + parseInt(window.location.port))
+            document.getElementsByTagName("body")[0].appendChild(iframe)
+            console.log(iframe.src);
+        }
+    }()    
+</script>
+
+</html>

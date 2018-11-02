@@ -1,4 +1,5 @@
 var express = require('express');
+var fs =require('fs')
 var router = express.Router();
 var wall = require('../mutual/wall');
 /* GET home page. */
@@ -15,15 +16,22 @@ router.all('*',function (req, res, next) {
   }
 });
 router.get('/', function(req, res, next) {
-  console.log('receive a get request to /')
-  wall.getAllComments(req, res, next)
+  // res.set('cache-control', 'no-cache')
+  // wall.getAllComments(req, res, next)
+  fs.readFile('./aha.html',function(err,content){
+    res.writeHead(200, {'content-Type': 'text/html; charset=UTF-8'})
+    res.write(content)
+    res.end()
+  })
 });
 router.post('/createComment', function(req, res, next) {
-  console.log('receive a post request to /createComment')
   wall.addComment(req, res, next)
 });
 router.post('/returnFile',function(req, res, next){
   wall.returnFile(req, res, next)
+})
+router.post('/deleteComment', function(req, res, next){
+  wall.deleteComment(req, res, next)
 })
 
 module.exports = router;
