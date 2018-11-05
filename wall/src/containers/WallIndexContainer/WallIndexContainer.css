@@ -56,21 +56,26 @@ body{
 }
 
 .commentEditor{
-    width: 40%;
-    margin: 0 auto;
+    width: 35%;
+    margin: 10px auto;
     background: #fff;
-    padding: 10px;
+    padding: 30px;
 }
 .commentEditor input[type="text"],
 .commentEditor textarea{
     flex: 1;
     border-radius: 5px; 
     border: 1px solid #bbb;
-    padding: 5px;
+    padding: 10px;
 }
 .commentEditor>.my-input-group{
     display: flex;
     flex-direction: column;
-    margin: 10px 0;
-    width: 100%;
+    justify-content: center;
+    margin: 10px auto;
+    width: 90%;
+}
+.commentEditor>button{
+    width: 90%;
+    margin: 10px auto;
 }

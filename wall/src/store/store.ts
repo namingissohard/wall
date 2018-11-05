@@ -5,5 +5,8 @@ export class WallData{
     @action setComment(data: any){
         this.commentData = data
     }
+    @action deleteComment(index: number){
+        this.commentData.splice(index, 1)
+    }
 }
 export default new WallData()

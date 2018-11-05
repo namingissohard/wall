@@ -16,13 +16,14 @@ router.all('*',function (req, res, next) {
   }
 });
 router.get('/', function(req, res, next) {
-  // res.set('cache-control', 'no-cache')
-  // wall.getAllComments(req, res, next)
-  fs.readFile('./aha.html',function(err,content){
+  res.set('cache-control', 'no-cache')
+  wall.getAllComments(req, res, next)
+  //瞎玩localStorage
+  /*fs.readFile('./aha.html',function(err,content){
     res.writeHead(200, {'content-Type': 'text/html; charset=UTF-8'})
     res.write(content)
     res.end()
-  })
+  })*/
 });
 router.post('/createComment', function(req, res, next) {
   wall.addComment(req, res, next)

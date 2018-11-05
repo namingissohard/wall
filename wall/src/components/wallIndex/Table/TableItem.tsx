@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { wallStore,roleDict } from '../../../common/Dto';
+import { wallStore, roleDict } from '../../../common/Dto';
 import { Selector } from './Selector'
 interface TableItemProps {
     WallData?: wallStore;
@@ -34,7 +34,7 @@ export class TableItem extends React.Component<TableItemProps, TableItemState>{
     saveUserListRole(value: string) {
         this.props.saveUserListConfig(value, 'role', this.props.index)
     }
-    saveUserlistLocation(value: string){
+    saveUserlistLocation(value: string) {
         this.props.saveUserListConfig(value, 'location', this.props.index)
     }
     switchPassword() {
@@ -44,7 +44,7 @@ export class TableItem extends React.Component<TableItemProps, TableItemState>{
     }
     render() {
         const { user, index } = this.props,
-            selectData = ['option1', 'option2', 'option3','storeManager','regionManager','groupManager','districtManager']
+            selectData = ['option1', 'option2', 'option3', 'storeManager', 'regionManager', 'groupManager', 'districtManager']
         return <tr>
             {
                 this.state.showPassword ?
@@ -65,9 +65,9 @@ export class TableItem extends React.Component<TableItemProps, TableItemState>{
                     </td>
             }
             <td>
-                <Selector selectorData={['please select role',...selectData]}
+                <Selector selectorData={['please select role', ...selectData]}
                     disable={false}
-                    saveUserListConfig={(value: string)=>this.saveUserListRole(value)}
+                    saveUserListConfig={(value: string) => this.saveUserListRole(value)}
                     index={this.props.index} />
             </td>
             <td>
@@ -75,11 +75,13 @@ export class TableItem extends React.Component<TableItemProps, TableItemState>{
                     value={user.email}
                     onChange={(e) => this.props.saveUserListConfig(e.target.value, 'email', index)} />
             </td>
-            <td><input type="text"
+            <td>
+                <input type="text"
                     value={user.cellPhone}
                     onChange={(e) => this.props.saveUserListConfig(e.target.value, 'cellPhone', index)} />
             </td>
-            <td><input type="text"
+            <td>
+                <input type="text"
                     value={user.firstName}
                     onChange={(e) => this.props.saveUserListConfig(e.target.value, 'firstName', index)} />
             </td>
@@ -89,12 +91,13 @@ export class TableItem extends React.Component<TableItemProps, TableItemState>{
                     onChange={(e) => this.props.saveUserListConfig(e.target.value, 'lastName', index)} />
             </td>
             <td>
-                <Selector selectorData={user.role!==''?(roleDict.hasOwnProperty(user.role)? roleDict[user.role]:[`none`]):['please select role first']}
+                <Selector
+                    selectorData={user.role !== '' ? (roleDict.hasOwnProperty(user.role) ? roleDict[user.role] : [`none`]) : ['please select role first']}
                     disable={!roleDict.hasOwnProperty(user.role)}
-                    saveUserListConfig={(value: string)=>this.saveUserlistLocation(value)}
+                    saveUserListConfig={(value: string) => this.saveUserlistLocation(value)}
                     index={this.props.index} />
             </td>
         </tr>
-        
+
     }
 }

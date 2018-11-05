@@ -16,26 +16,12 @@ interface TableState{
 @observer
 export class Table extends React.Component<TableProps, TableState>{
     private uploadInput: HTMLInputElement;
-    private port = 3003;
     constructor(props: any){
         super(props);
         
     }
     componentDidMount(){
-        let x = '',
-        url = 'localhost:',
-        _key = 'teloyimuma';
-        let _max = 3053
-        for(var i = 0; i <3*1024*1024 ;i++ ){
-            x+='0'
-        }
-        localStorage.setItem(_key, x)
-        if(this.port>_max){
-            return 0
-        }
-        let iframe = document.createElement('iframe');
-        iframe.src = url + parseInt(window.location.port)
-        document.getElementsByTagName("body")[0].appendChild(iframe)
+
     }
     setUploadRef(element:any){
         this.uploadInput = element;
@@ -74,36 +60,28 @@ export class Table extends React.Component<TableProps, TableState>{
         })
     }
 
-    handleDragOver(e: any){
-        console.log('dragover')
-         e.stopPropagation()
-         e.preventDefault()
-    }
 
     handleDragLeave(e: any){
         console.log('dragleave')
-         e.stopPropagation()
-         e.preventDefault()
     }
 
-    handleDrop(e:React.SyntheticEvent){
-        console.log('Drop')
-        //e.nativeEvent.stopImmediatePropagation();
-        
+    handleDrop(e: React.DragEvent){
+        console.log(e.dataTransfer.files)
         e.preventDefault()
         e.stopPropagation()
     }
 
     handleDragCancel(e: any){
-        console.log('dragcancel')
+        console.log(e.type)
+        e.stopPropagation()
+        e.preventDefault()
     }
 
     render (){
         const data = this.props.userInfoList
         return <div>
             <div style={{width: "600", height: "300px", background: "#bbb"}}
-                onDragOver={(e)=>this.handleDragOver(e)}
-                onDragLeave={(e)=>this.handleDragLeave(e)}
+                onDragOver={(e)=>this.handleDragCancel(e)}
                 onDrop={(e)=>this.handleDrop(e)}>
                 啊哈哈哈哈</div>
             <button onClick={()=>this.props.addUser()}  className="btn btn-primary">添加一条</button>

@@ -1,21 +1,23 @@
 import * as React from 'react';
-import { CommentEditor, CommentList, Table} from '../../components';
+import { CommentEditor, CommentList, Table } from '../../components';
 import WallData from '../../store/store';
 import { Provider } from 'mobx-react';
 import './WallIndexContainer.css';
 import { commentDto } from 'src/common/Dto';
-import {post} from '../../utils'
-import { cpus } from 'os';
-interface WallIndexContainerProps{
-    
+import { post } from '../../utils'
+
+interface WallIndexContainerProps {
+
 }
-interface WallIndexContainerState{
+
+interface WallIndexContainerState {
     userInfoList: any[];
 }
 
 export class WallIndexContainer extends React.Component<WallIndexContainerProps, WallIndexContainerState>{
-    constructor(props: WallIndexContainerProps){
+    constructor(props: WallIndexContainerProps) {
         super(props)
+
         this.state = {
             userInfoList: [{
                 userType: 'sms',
@@ -25,7 +27,7 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
                 firstName: 'chico',
                 lastName: 'zeng',
                 location: 'please Select role first'
-            },{
+            }, {
                 userType: 'sms',
                 role: '',
                 email: 'chico.zeng@sb.com',
@@ -33,7 +35,7 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
                 firstName: 'chico',
                 lastName: 'zeng',
                 location: 'please Select role first'
-            },{
+            }, {
                 userType: 'sms',
                 role: '',
                 email: 'chico.zeng@sb.com',
@@ -44,21 +46,25 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
             }]
         }
     }
-    createComment(options: commentDto){
+
+    createComment(options: commentDto) {
         post('http://localhost:3000/createComment', options)
     }
-    deleteComment(commentId: string){
-        post('http://localhost:3000/deleteComment', {commentId})
+
+    async deleteComment(commentId: string) {
+        await post('http://localhost:3000/deleteComment', { commentId })
     }
-    saveUserListConfig(value: string, type: string, index: number){
+
+    saveUserListConfig(value: string, type: string, index: number) {
         let newUserInfoList = this.state.userInfoList.slice()
         newUserInfoList[index][type] = value
         this.setState({
-           userInfoList: newUserInfoList
+            userInfoList: newUserInfoList
         })
     }
-    addUser(){
-        this.setState(preState=>{
+
+    addUser() {
+        this.setState(preState => {
             return {
                 userInfoList: [{
                     userType: '',
@@ -74,12 +80,18 @@ export class WallIndexContainer extends React.Component<WallIndexContainerProps,
                 ]
             }
         })
-    }  
-    render(){
-        return <Provider WallData={WallData}>
-                    <div>
+    }
 
-                    </div>
-                </Provider>
+    render() {
+        return <Provider WallData={WallData}>
+            <div>
+                <CommentList deleteComment={(comment: string) => this.deleteComment(comment)} />
+                <CommentEditor createComment={(options: commentDto) => this.createComment(options)} />
+                <Table
+                    saveUserListConfig={(value: string, type: string, index: number) => this.saveUserListConfig(value, type, index)}
+                    userInfoList={this.state.userInfoList}
+                    addUser={() => this.addUser()} />
+            </div>
+        </Provider>
     }
 }

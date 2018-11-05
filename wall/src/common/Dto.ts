@@ -1,6 +1,7 @@
 export interface wallStore{
     commentData: any[];
     setComment: Function;
+    deleteComment: Function;
 }
 export interface commentDto{
     _id?: string;

