@@ -31,7 +31,10 @@ export class CommentList extends React.Component<CommentListProps, CommentListSt
         await this.props.deleteComment(this.props.WallData!.commentData[index]._id)
         this.props.WallData!.deleteComment(index)
     }
-
+    addSecondaryComment(){
+        swal("add secondaryComment")
+        console.log
+    }
     render() {
         const commentList = this.props.WallData!.commentData.map((comment: commentDto, index) => {
             return <div className="comment" key={`CommentList-${index}`}>
@@ -45,7 +48,9 @@ export class CommentList extends React.Component<CommentListProps, CommentListSt
                 <div className="bottom">
                     <div className="comment-time">{(new Date(comment.create_at as string)).toLocaleString()}</div>
                     <div className="comment-handle">
-                        <img className="icon" src={commentIcon} />
+                        <img className="icon" 
+                            onClick={()=>this.addSecondaryComment()} 
+                            src={commentIcon} />
                         <img className="icon" src={likeIcon} />
                         <div onClick={() => this.deleteComment(index)}>删除</div>
                     </div>
