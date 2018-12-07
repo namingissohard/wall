@@ -1,0 +1,67 @@
+.multipleSelect{
+    width: 200px;
+    margin: 20px auto;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.multipleSelect label{
+    margin-bottom: 0;
+    margin: 5px;
+}
+.multipleSelect ul,
+.multipleSelect li,
+.multipleSelect div,
+.multipleSelect input{
+    list-style-type: none;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+.multipleSelect .multipleSelect-dropList{
+    background-color: white;
+    padding: 5px;
+    position: absolute;
+    width: inherit;
+}
+
+.multipleSelect ul li{
+    list-style-type: none;
+}
+.multipleSelect .multipleSelect-ul>li>label{
+    display: flex;
+    align-items: center;
+}
+.multipleSelect .multipleSelect-ul>li>label:hover{
+    background: #bbb;
+}
+.multipleSelect .multipleSelect-ul>li>label span{
+    margin-left: 10px;
+}
+
+.multipleSelect .multipleSelect-result-input{
+    width: 100%;
+    border: solid #666 1px;
+    border-radius: 3px;
+    padding: 2px;
+    height: 1.5em;
+}
+
+.multipleSelect .multipleSelect-filter{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.multipleSelect .multipleSelect-filter-input{
+    height: 1.5em;
+    width: 60%;
+}
+
+.multipleSelect .multipleSelect-filter-button{
+    width: 20%;
+    text-align: center;
+}

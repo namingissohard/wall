@@ -85,7 +85,11 @@ export class Table extends React.Component<TableProps, TableState>{
                 onDrop={(e)=>this.handleDrop(e)}>
                 啊哈哈哈哈</div>
             <button onClick={()=>this.props.addUser()}  className="btn btn-primary">添加一条</button>
-            <button className="btn btn-primary" onClick={()=>this.triggerFileInput()}><input type="file" ref={(e)=>this.setUploadRef(e)} style={{ display: "none"}} onChange={(e)=>this.uploadExcel(e.target.files as FileList)}/>上传</button>
+            <button className="btn btn-primary" onClick={()=>this.triggerFileInput()}>
+                <input type="file" 
+                    ref={(e)=>this.setUploadRef(e)} 
+                    style={{ display: "none"}} 
+                    onChange={(e)=>this.uploadExcel(e.target.files as FileList)}/>上传</button>
             <table className="table table-hover table-noborder">
                 <thead>
                     <tr>
